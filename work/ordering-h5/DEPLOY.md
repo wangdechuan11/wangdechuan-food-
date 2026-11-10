@@ -126,16 +126,60 @@ powershell -NoProfile -Command "Compress-Archive -Path 'dist\*' -DestinationPath
 
 ---
 
-## 发布到 ZCode Sites（主入口）
+## 日常发布（改完代码怎么上线）
+
+### ① 主入口（ZCode Sites）—— 一条命令
+
+```bash
+cd D:/MyWork/gitWork/work/ordering-h5
+bash publish.sh
+```
+
+脚本自动完成：重建打包目录 → 本地预检（确认 `/` 返回 200）→ 上传发布。
+**域名不变**：https://food-academy-kk6v.zai-ai.site
+
+> 脚本会自动查找 zcode-site CLI 的最新版本；找不到时可手动指定：
+> `ZCODE_SITE_CLI=/path/to/zcode-site.mjs bash publish.sh`
+
+### ② 备份入口（GitHub Pages）—— 推代码即自动部署
+
+```bash
+cd D:/MyWork/gitWork
+
+git add work/ordering-h5
+git commit -m "update recipes"
+git push github master:main
+```
+
+推送后约 40 秒自动部署，**地址不变**：https://wangdechuan11.github.io/wangdechuan-food-/
+
+> `master:main` 是因为本地分支叫 `master`、远端默认是 `main`。
+> 想省掉这个映射可执行一次：`git branch -u github/main master`，之后直接 `git push github`。
+
+### ③ 检查发布结果
+
+```bash
+# 主入口
+curl -sS -o /dev/null -w "%{http_code}\n" https://food-academy-kk6v.zai-ai.site/
+
+# 备份入口
+curl -sS -o /dev/null -w "%{http_code}\n" https://wangdechuan11.github.io/wangdechuan-food-/
+
+# GitHub Actions 运行记录
+start https://github.com/wangdechuan11/wangdechuan-food-/actions
+```
+
+---
+
+## 手动发布到 ZCode Sites（脚本不可用时）
 
 ```bash
 cd D:/MyWork/gitWork/work/ordering-h5
 
-# 1. 重建打包目录（只放运行需要的文件）
+# 1. 重建打包目录
 rm -rf .zcode-site/stage && mkdir -p .zcode-site/stage
-cp -r index.html css js .zcode-site/stage/
-cp "<zcode-site 模板目录>/static-server.mjs" .zcode-site/stage/
-# start.sh 见上一次部署的版本，需保持 LF 换行
+cp -r index.html css js serve.js .zcode-site/stage/
+# start.sh 内容见 publish.sh（需 LF 换行）
 
 # 2. 预检 + 发布
 node "<zcode-site.mjs>" check .zcode-site/stage
