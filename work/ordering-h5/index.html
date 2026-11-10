@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#ff4d2a" />
+<meta name="description" content="美食学堂 - 家常菜详细菜谱，含食材清单、调味料、所需器材与分步骤烹饪技巧" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍳</text></svg>" />
+<title>美食学堂 · 在家学做菜</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="header">
+    <div class="header-top">
+      <div class="shop-name" id="shopName">🍳 美食学堂 · 在家学做菜</div>
+      <div class="table-chip" id="tableChip">家常菜谱</div>
+    </div>
+    <div class="notice"><span id="noticeText">📢 点击任意菜品，查看食材清单、所需器材与烹饪技巧</span></div>
+  </header>
+
+  <div class="search-wrap">
+    <div class="search">
+      <span class="s-icon">🔍</span>
+      <input id="searchIn" type="search" placeholder="搜索菜谱，如“红烧肉”“豆腐”" autocomplete="off" />
+    </div>
+    <button class="pantry-btn" type="button" data-action="open-pantry" aria-label="我有食材">
+      <span class="pb-icon">🧺</span><span class="pb-text">我有食材</span>
+    </button>
+  </div>
+
+  <div class="filters" id="filters">
+    <div class="f-row">
+      <span class="f-label">难度</span>
+      <div class="f-chips" id="fDiff"></div>
+    </div>
+    <div class="f-row">
+      <span class="f-label">处理</span>
+      <div class="f-chips" id="fPrep"></div>
+    </div>
+  </div>
+
+  <div class="menu">
+    <aside class="cats" id="cats"></aside>
+    <div class="dishes" id="dishes">
+      <div id="menuList"></div>
+      <div id="searchList" class="hide"></div>
+    </div>
+  </div>
+
+  <footer class="favbar empty" id="favbar">
+    <button class="fav-float" type="button" data-action="toggle-favpop" aria-label="我的菜谱集">
+      <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+      <span class="badge" id="badge">0</span>
+    </button>
+    <div class="cb-mid">
+      <div class="cb-title" id="cbTitle">我的菜谱集</div>
+      <div class="cb-sub" id="cbSub">点击 ♡ 收藏想学的菜，随时翻看</div>
+    </div>
+    <button class="cb-btn" type="button" data-action="toggle-favpop">查看菜谱集</button>
+  </footer>
+
+  <div class="mask" id="mask" data-action="close-fav"></div>
+
+  <div class="favpop" id="favpop">
+    <div class="cp-head">
+      <div class="cp-title">我的菜谱集<span class="cp-count" id="popCount"></span></div>
+      <button class="cp-clear" type="button" data-action="clear-fav">🗑️ 清空</button>
+    </div>
+    <div class="cp-list" id="favList"></div>
+  </div>
+
+  <div class="modal-mask" id="modalMask" data-action="close-modal">
+    <div class="modal detail" id="modalCard"></div>
+  </div>
+
+  <div class="mask ing-mask" id="ingMask" data-action="close-ing"></div>
+  <div class="ingsheet" id="ingSheet">
+    <div class="is-grab"></div>
+    <div class="is-scroll" id="ingBody"></div>
+  </div>
+
+  <div class="mask pantry-mask" id="pantryMask" data-action="close-pantry"></div>
+  <div class="pantrysheet" id="pantrySheet">
+    <div class="is-grab"></div>
+    <div class="p-scroll" id="pantryBody"></div>
+  </div>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lb-close" type="button" data-action="close-lb" aria-label="关闭">✕</button>
+    <div class="lb-stage">
+      <img class="lb-img" id="lbImg" alt="" />
+    </div>
+    <button class="lb-nav lb-prev" type="button" data-action="lb-prev" aria-label="上一张">‹</button>
+    <button class="lb-nav lb-next" type="button" data-action="lb-next" aria-label="下一张">›</button>
+    <div class="lb-bar">
+      <span class="lb-name" id="lbName"></span>
+      <span class="lb-count" id="lbCount"></span>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/ingredients.js"></script>
+<script src="js/photos.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
